@@ -10,10 +10,13 @@ import { Icon } from "react-native-elements";
 
 export default function PastaScreen({ navigation }) {
   return (
-    <ScrollView>
+    <ScrollView style={stylesHome.background}>
       <Text style={stylesHome.title}>Padrão</Text>
       <View>
-        <TouchableOpacity style={stylesHome.botaoOpcao}>
+        <TouchableOpacity
+          style={stylesHome.botaoOpcao}
+          onPress={() => navigation.navigate("Calendario")}
+        >
           <Icon name="calendar-outline" type="ionicon"></Icon>
           <Text style={stylesHome.text}>Calendario</Text>
         </TouchableOpacity>
@@ -43,11 +46,14 @@ export default function PastaScreen({ navigation }) {
 }
 
 const stylesHome = StyleSheet.create({
+  background: {
+    backgroundColor: "#fff",
+  },
   botaoOpcao: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#f9f9f9",
     paddingHorizontal: 20,
     padding: 10,
     marginHorizontal: 10,

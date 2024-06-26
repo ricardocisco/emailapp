@@ -10,15 +10,23 @@ import {
 import { data } from "../services/data";
 import { Icon } from "react-native-elements";
 
-export default function InboxScreen() {
+export default function InboxScreen({ navigation }) {
   const [emails, setEmails] = useState(data);
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <View>
-      <ScrollView>
+    <ScrollView style={stylesemail.background}>
+      <View style={stylesemail.boxemail}>
         {emails.map((email) => (
-          <TouchableOpacity style={stylesemail.boxemail} key={email.id}>
+          <TouchableOpacity
+            key={email.id}
+            style={{
+              marginTop: 10,
+              borderBlockColor: "#686D76",
+              borderBottomWidth: 1,
+            }}
+            onPress={() => navigation.navigate("Email", { email })}
+          >
             <View style={stylesemail.headeremail}>
               <View style={stylesemail.boximage}>
                 <Image style={stylesemail.image} src={email.imagem} />
@@ -42,20 +50,20 @@ export default function InboxScreen() {
             <Text style={stylesemail.emaildescription}>{email.descricao}</Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const stylesemail = StyleSheet.create({
+  background: {
+    backgroundColor: "#fff",
+  },
   boxemail: {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: 10,
-    marginHorizontal: 15,
-    padding: 10,
-    borderBlockColor: "#686D76",
-    borderBottomWidth: 1,
+    padding: 16,
+    height: "auto",
   },
   boximage: {
     display: "flex",
@@ -75,6 +83,7 @@ const stylesemail = StyleSheet.create({
   emaildescription: {
     fontSize: 14,
     marginTop: 5,
+    marginBottom: 20,
   },
   image: {
     width: 45,

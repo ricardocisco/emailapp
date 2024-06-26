@@ -47,6 +47,7 @@ const style = StyleSheet.create({
     display: "flex",
     height: "100%",
     justifyContent: "space-between",
+    backgroundColor: "#fff",
   },
   boxbutton: {
     flexDirection: "row",

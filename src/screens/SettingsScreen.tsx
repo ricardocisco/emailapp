@@ -14,7 +14,7 @@ export default function SettingsScreen() {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.background}>
       <Text style={styles.title}>Aparencia</Text>
       <View style={styles.switchstyle}>
         <Switch
@@ -93,6 +93,9 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: "#fff",
+  },
   switchstyle: {
     paddingHorizontal: 20,
   },

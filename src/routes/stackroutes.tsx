@@ -5,6 +5,8 @@ import { StyleSheet } from "react-native";
 import TabRoutes from "./tabroutes";
 import SettingsScreen from "../screens/SettingsScreen";
 import WriteScreen from "../screens/WriteScreen";
+import EmailScreen from "../screens/EmailScreen";
+import CalendarTab from "./calendartab";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,15 +24,12 @@ export default function StackRoutes({ navigation }) {
         name="Escrever"
         component={WriteScreen}
       />
+      <Stack.Screen
+        options={{ headerShown: true }}
+        name="Email"
+        component={EmailScreen}
+      />
+      <Stack.Screen name="Calendario" component={CalendarTab} />
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
