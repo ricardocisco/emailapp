@@ -12,14 +12,14 @@ import { Icon } from "react-native-elements";
 
 export default function InboxScreen({ navigation }) {
   const [emails, setEmails] = useState(data);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(null);
 
   return (
     <ScrollView style={stylesemail.background}>
       <View style={stylesemail.boxemail}>
-        {emails.map((email) => (
+        {emails.map((email, index) => (
           <TouchableOpacity
-            key={email.id}
+            key={index}
             style={{
               marginTop: 10,
               borderBlockColor: "#686D76",
@@ -37,8 +37,8 @@ export default function InboxScreen({ navigation }) {
               </View>
               <View>
                 <Text>{email.time} ago</Text>
-                <TouchableOpacity onPress={() => setIsFavorite(true)}>
-                  {isFavorite ? (
+                <TouchableOpacity onPress={() => setIsFavorite(email.id)}>
+                  {isFavorite === email.id ? (
                     <Icon name="star" type="ionicon" color="#FFAD0F"></Icon>
                   ) : (
                     <Icon name="star-outline" type="ionicon"></Icon>

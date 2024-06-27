@@ -24,10 +24,10 @@ export default function EmailScreen({ route, navigation }) {
         </View>
       </View>
       <View style={styles.boxbuttons}>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.buttontextarea}>
           <Text style={styles.buttontext}>Encaminhar</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.buttontextarea}>
           <Text style={styles.buttontext}>Responder</Text>
         </TouchableOpacity>
       </View>
@@ -47,6 +47,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 25,
     padding: 20,
+  },
+  buttontextarea: {
+    backgroundColor: "#0368FF",
+    paddingHorizontal: 22,
+    paddingVertical: 14,
+    borderRadius: 12,
+  },
+  buttontext: {
+    color: "#fff",
+    fontSize: 16,
   },
   boxemail: {
     display: "flex",
@@ -77,9 +87,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 17,
     marginTop: 12,
-  },
-  buttontext: {
-    fontSize: 17,
   },
   image: {
     width: 55,
