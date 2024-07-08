@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -9,10 +9,41 @@ import {
 } from "react-native";
 import { data } from "../services/data";
 import { Icon } from "react-native-elements";
+import { useSearch } from "../context/SearchContext";
+import { useFavorite } from "../context/FavoriteContext";
+
+interface Email {
+  id: number;
+  nome: string;
+  email: string;
+  titulo: string;
+  descricao: string;
+  time: string;
+  imagem: string;
+}
 
 export default function InboxScreen({ navigation }) {
-  const [emails, setEmails] = useState(data);
-  const [isFavorite, setIsFavorite] = useState(null);
+  const [emails, setEmails] = useState<Email[]>(data);
+  const { favoriteEmails, toggleFavorite } = useFavorite();
+  const { searchQuery } = useSearch();
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filteredEmails = data.filter(
+        (email) =>
+          email.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          email.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          email.descricao.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setEmails(filteredEmails);
+    } else {
+      setEmails(data);
+    }
+  }, [searchQuery]);
+
+  const isFavorite = (email: Email) => {
+    return favoriteEmails.some((favEmail) => favEmail.id === email.id);
+  };
 
   return (
     <ScrollView style={stylesemail.background}>
@@ -37,11 +68,11 @@ export default function InboxScreen({ navigation }) {
               </View>
               <View>
                 <Text>{email.time} ago</Text>
-                <TouchableOpacity onPress={() => setIsFavorite(email.id)}>
-                  {isFavorite === email.id ? (
-                    <Icon name="star" type="ionicon" color="#FFAD0F"></Icon>
+                <TouchableOpacity onPress={() => toggleFavorite(email)}>
+                  {isFavorite(email) ? (
+                    <Icon name="star" type="ionicon" color="#FFAD0F" />
                   ) : (
-                    <Icon name="star-outline" type="ionicon"></Icon>
+                    <Icon name="star-outline" type="ionicon" />
                   )}
                 </TouchableOpacity>
               </View>

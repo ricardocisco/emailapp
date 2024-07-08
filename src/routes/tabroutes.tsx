@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -7,26 +7,46 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Platform,
 } from "react-native";
 import InboxScreen from "../screens/InboxScreen";
 import FavoritoScreen from "../screens/FavoritoScreen";
 import PastaScreen from "../screens/PastaScreen";
 import { Icon } from "react-native-elements";
 import { color } from "react-native-elements/dist/helpers";
+import { useSearch } from "../context/SearchContext";
+import NetInfo from "@react-native-community/netinfo";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function TabRoutes({ navigation }) {
+  const { searchQuery, setSearchQuery } = useSearch();
   const [nome, setNome] = useState("Rachel Jacobs");
-  const [internet, setInternet] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
+
+  const [isConnected, setIsConnected] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <>
       <View style={styles.containertop}>
         {isSearching ? (
           <View style={styles.inputbox}>
-            <TextInput placeholder="Pesquisar" style={styles.input}></TextInput>
+            <TextInput
+              placeholder="Pesquisar"
+              style={styles.input}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            ></TextInput>
             <TouchableOpacity onPress={() => setIsSearching(false)}>
               <Icon name="close-outline" type="ionicon"></Icon>
             </TouchableOpacity>
@@ -56,7 +76,7 @@ export default function TabRoutes({ navigation }) {
                 <Icon name="settings-outline" type="ionicon"></Icon>
               </TouchableOpacity>
               <TouchableOpacity style={styles.iconstyle}>
-                {internet ? (
+                {isConnected ? (
                   <Icon name="cloudy-outline" type="ionicon"></Icon>
                 ) : (
                   <Icon name="cloud-offline-outline" type="ionicon"></Icon>
@@ -148,6 +168,7 @@ const styles = StyleSheet.create({
   containertop: {
     backgroundColor: "#fff",
     paddingHorizontal: 10,
+    paddingTop: Platform.OS === "android" ? 40 : 0,
   },
   searchbar: {
     display: "flex",

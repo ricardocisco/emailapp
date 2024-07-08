@@ -7,6 +7,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import WriteScreen from "../screens/WriteScreen";
 import EmailScreen from "../screens/EmailScreen";
 import CalendarTab from "./calendartab";
+import ResponseScreen from "../screens/ResponseScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +30,16 @@ export default function StackRoutes({ navigation }) {
         name="Email"
         component={EmailScreen}
       />
-      <Stack.Screen name="Calendario" component={CalendarTab} />
+      <Stack.Screen
+        options={{ headerShown: true }}
+        name="Responder"
+        component={ResponseScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: true }}
+        name="Calendario"
+        component={CalendarTab}
+      />
     </Stack.Navigator>
   );
 }

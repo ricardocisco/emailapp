@@ -10,8 +10,22 @@ import {
 } from "react-native";
 
 export default function SettingsScreen() {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>({
+    appearance: false,
+    receiveNotifications: false,
+    sound: false,
+    notificationSummary: false,
+    animations: false,
+    autoUpdates: false,
+    limitBackgroundData: false,
+  });
+
+  const toggleSwitch = (key: string) => {
+    setSwitchStates((prevStates) => ({
+      ...prevStates,
+      [key]: !prevStates[key],
+    }));
+  };
 
   return (
     <ScrollView style={styles.background}>
@@ -20,8 +34,8 @@ export default function SettingsScreen() {
         <Switch
           trackColor={{ false: "#767577", true: "#27AE60" }}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
+          onValueChange={() => toggleSwitch("appearance")}
+          value={switchStates.appearance}
         />
       </View>
       <View>
@@ -31,8 +45,8 @@ export default function SettingsScreen() {
           <Switch
             trackColor={{ false: "#767577", true: "#27AE60" }}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={() => toggleSwitch("receiveNotifications")}
+            value={switchStates.receiveNotifications}
           />
         </View>
         <View style={styles.switchrow}>
@@ -40,8 +54,8 @@ export default function SettingsScreen() {
           <Switch
             trackColor={{ false: "#767577", true: "#27AE60" }}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={() => toggleSwitch("sound")}
+            value={switchStates.sound}
           />
         </View>
         <View style={styles.switchrow}>
@@ -49,8 +63,8 @@ export default function SettingsScreen() {
           <Switch
             trackColor={{ false: "#767577", true: "#27AE60" }}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={() => toggleSwitch("notificationSummary")}
+            value={switchStates.notificationSummary}
           />
         </View>
       </View>
@@ -61,8 +75,8 @@ export default function SettingsScreen() {
           <Switch
             trackColor={{ false: "#767577", true: "#27AE60" }}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={() => toggleSwitch("animations")}
+            value={switchStates.animations}
           />
         </View>
         <View style={styles.switchrow}>
@@ -70,8 +84,8 @@ export default function SettingsScreen() {
           <Switch
             trackColor={{ false: "#767577", true: "#27AE60" }}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={() => toggleSwitch("autoUpdates")}
+            value={switchStates.autoUpdates}
           />
         </View>
         <View style={styles.switchrow}>
@@ -79,14 +93,19 @@ export default function SettingsScreen() {
           <Switch
             trackColor={{ false: "#767577", true: "#27AE60" }}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={() => toggleSwitch("limitBackgroundData")}
+            value={switchStates.limitBackgroundData}
           />
         </View>
       </View>
       <View>
         <Text style={styles.title}>Histórico</Text>
-        <Button title="Limpar Historico"></Button>
+        <Button
+          title="Limpar Historico"
+          onPress={() => {
+            /* Handle clear history */
+          }}
+        />
       </View>
     </ScrollView>
   );

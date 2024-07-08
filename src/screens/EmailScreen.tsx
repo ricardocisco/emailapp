@@ -27,7 +27,10 @@ export default function EmailScreen({ route, navigation }) {
         <TouchableOpacity style={styles.buttontextarea}>
           <Text style={styles.buttontext}>Encaminhar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttontextarea}>
+        <TouchableOpacity
+          style={styles.buttontextarea}
+          onPress={() => navigation.navigate("Responder", { email })}
+        >
           <Text style={styles.buttontext}>Responder</Text>
         </TouchableOpacity>
       </View>
